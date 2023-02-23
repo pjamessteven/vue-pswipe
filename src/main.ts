@@ -1,24 +1,26 @@
-import { PluginFunction } from 'vue' // eslint-disable-line
 import { PswpOptions, ManualCreateArgs } from '@/type'
 import { GlobalOption } from '@/config'
-import { registerDirective, manualCreate, UI } from '@/utils'
+import {  manualCreate, UI } from '@/utils'
 import PhotoswipeComponent from '@/components/photoswipe.vue'
 
-const install: PluginFunction<PswpOptions> = (Vue, options?: PswpOptions) => {
-    if (options) GlobalOption.extend(options)
 
-    registerDirective()
+const PhotoswipePlugin = {
+    install(app: any, options?: PswpOptions) {
 
-    Vue.component('Photoswipe', PhotoswipeComponent)
+      if (!options) {
+        options = {};
+      } else {
+        GlobalOption.extend(options)
+      }
+      const Photoswipe = new PhotoswipeComponent(options);
+      app.component('vue-pswp', Photoswipe);
+        app.config.globalProperties.$Pswp = {
+            open(args: ManualCreateArgs) {
+                UI.append()
+                return manualCreate(args)
+            }
+      }
+    },
+};
 
-    // eslint-disable-next-line no-param-reassign
-    Vue.prototype.$Pswp = {
-        open(args: ManualCreateArgs) {
-            UI.append()
-            return manualCreate(args)
-        },
-    }
-}
-
-export const Photoswipe = PhotoswipeComponent
-export default install
+export default PhotoswipePlugin;
