@@ -34,7 +34,7 @@
         "video.js": "^5.20.5",
         "vue": "^2.6.10",
         "vue-class-component": "^6.3.2",
-        "vue-property-decorator": "^7.3.0",
+        "vue-property-decorator":  "git+https://github.com/kaorun343/vue-property-decorator#2387799",
         "vue-template-compiler": "^2.6.10"
     },
     "browserslist": [
